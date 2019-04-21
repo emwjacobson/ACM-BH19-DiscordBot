@@ -8,7 +8,6 @@ export class Ban extends Command {
     }
 
     public call(msg: Message, command: string) {
-        let user_to_ban: string[] = command.split(" ");
         for (let member of msg.mentions.members.array()) {
             if(member.id !== env.botId) {
                 member.ban();

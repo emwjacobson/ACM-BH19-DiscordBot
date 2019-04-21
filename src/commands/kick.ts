@@ -8,7 +8,6 @@ export class Kick extends Command {
     }
 
     public call(msg: Message, command: string) {
-        let user_to_kick: string[] = command.split(" ");
         for (let member of msg.mentions.members.array()) {
             if(member.id !== env.botId) {
                 member.kick();

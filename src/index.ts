@@ -7,12 +7,17 @@ import { Kick } from './commands/kick';
 import { Ban } from './commands/ban';
 import { SentimentAnalysis } from './commands/SentimentAnalysis';
 import { Ping } from './commands/ping';
+import { Join } from './commands/join';
+import { Leave } from './commands/leave';
 // $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
+
 let cmds: Command[] = [
     new Test(),
     new Kick(),
     new Ban(),
     new Ping(),
+    new Join(),
+    new Leave()
 ];
 
 client.on('ready', () => {

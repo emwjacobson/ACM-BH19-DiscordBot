@@ -14,7 +14,7 @@ export class SentimentAnalysis {
     public user: Discord.User;
     public message: Discord.Message
     public entities: any;
-   public reply: string;
+   public reply: string = "";
     constructor( msg : Discord.Message) {
         
 const document = {
