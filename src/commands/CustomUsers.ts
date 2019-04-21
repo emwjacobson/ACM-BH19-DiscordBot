@@ -1,4 +1,6 @@
 import * as Discord from 'discord.js';
+import { Kick } from './kick';
+var stringSimilarity = require('string-similarity');
 abstract class IECustomUsers<T>
 {
     abstract equals(obj:T) : boolean
@@ -6,47 +8,55 @@ abstract class IECustomUsers<T>
 export class CustomUsers extends IECustomUsers<Discord.User>{
     public user: Discord.User;
     private _quotient = 0;
-    private _lastquotient = 0;
+    private _lastmsg = "";
+    public isAlive = true;
 
-    constructor(id: Discord.User, quotient: number) {
+    constructor(id: Discord.User, quotient: number, msg : Discord.Message, num : number ){
         super();
         this.user = id;
-        this.updateQuotient;
+        this.updateQuotient(quotient, msg, num);
     }
 
-    public updateQuotient(quotient : number)
+    public updateQuotient(quotient : number, msg : Discord.Message, num : number) 
     {   
-        if(quotient = this._lastquotient)
+        let similiar = stringSimilarity.compareTwoStrings(msg.content, this._lastmsg)
+        if ( similiar > 0.70)
         {
-            this._quotient += -9999999;
+            this.kick("🦀🦀🦀CHEATER LOL🦀🦀🦀");
             return;
         }
-        let seed =  (Math.random() * Math.floor(10));
-        if(seed  < 5){
+        let seed = (Math.round(num / 5) + Math.round((Math.random() * Math.floor(10))));
+        if(seed > 10)
+        {
+            seed = 10;
+        }
+        this.user.lastMessage.channel.sendMessage("MODE: " + seed);
+        if(seed < 8){
         this._quotient += (quotient * 100);
         }
         else
         {
             switch (seed) {
-                case 6:
-                    this._quotient += (quotient * 30);
-                    break;
-                case 7:
-                    this._quotient -= (quotient * 100);
-                break;
                 case 8:
-                    this._quotient = 0;
+                    this._quotient += 0;
                     break;
                 case 9:
-                    this._quotient *= (quotient);
+                    this._quotient -= (quotient * 100);
                     break;
                 case 10:
-                    this.updateQuotient(quotient);
+                    this._quotient += (quotient * (num / 2));
+                    break;
                 default:
                     break;
             }
         }
-        this._lastquotient = quotient;
+        if(this._quotient < -500)
+        {
+            this.kick("🦀🦀🦀YOU LOST LOL🦀🦀🦀");
+            return;
+        }
+        this._lastmsg = msg.content;
+        
     }
     public equals(obj: Discord.User) : boolean { 
         return this.user.id === obj.id;
@@ -54,5 +64,21 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
     public getQuotient()
     {
         return this._quotient;
+    }
+    public kick(str:string)
+    {
+        try{
+        this._quotient = -9999999999999999;
+        str +="\nYour score is :" + this._quotient + "\nhttps://discord.gg/NFwQH2M"
+        this.user.createDM().then((dm: Discord.DMChannel) => {
+            dm.send(str);
+            this.user.lastMessage.member.kick(str);
+            this.isAlive = false;
+        });
+    }
+    catch(e)
+    {
+        console.log(e);
+    }
     }
 }
