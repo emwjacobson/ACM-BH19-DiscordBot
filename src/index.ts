@@ -6,12 +6,13 @@ import { Command } from './commands/command';
 import { Kick } from './commands/kick';
 import { Ban } from './commands/ban';
 import { SentimentAnalysis } from './commands/SentimentAnalysis';
-$env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
+import { Ping } from './commands/ping';
+// $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
 let cmds: Command[] = [
     new Test(),
     new Kick(),
     new Ban(),
-    // new Ping(),
+    new Ping(),
 ];
 
 client.on('ready', () => {
@@ -20,7 +21,6 @@ client.on('ready', () => {
 
 // This is run when the bot recieves a message.
 client.on('message', (msg: Discord.Message) => {
-    const timei = (new Date).getMilliseconds();
     // If the id is anyone except the bots own ID.
     if (msg.author.id !== env.botId){
         // If you summoned the bot, respond to command
@@ -39,7 +39,6 @@ client.on('message', (msg: Discord.Message) => {
         let sentiment = new SentimentAnalysis(msg);
         msg.channel.send(sentiment.reply);
     }
-    console.log((new Date).getMilliseconds() - timei);
 });
 
 client.login(env.token);
