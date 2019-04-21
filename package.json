@@ -17,6 +17,7 @@
     "ffmpeg": "0.0.4",
     "libsodium-wrappers": "^0.7.4",
     "node-opus": "^0.3.1",
+    "ste-simple-events": "^1.4.10",
     "typescript": "^3.4.4",
     "zlib-sync": "^0.1.4"
   },
