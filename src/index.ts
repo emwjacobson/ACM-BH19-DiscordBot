@@ -17,6 +17,8 @@ let arrUsers : CustomUsers[] = [];
 import { Ping } from './commands/ping';
 import { Join } from './commands/join';
 import { Leave } from './commands/leave';
+import { StartBR } from './commands/startbr';
+import { EndBR } from './commands/endbr';
 // $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
 
 let cmds: Command[] = [
@@ -25,7 +27,9 @@ let cmds: Command[] = [
     new Ban(),
     new Ping(),
     new Join(),
-    new Leave()
+    new Leave(),
+    new StartBR(),
+    new EndBR(),
 ];
 
 client.on('ready', () => {

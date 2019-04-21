@@ -38,7 +38,7 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
                     this._quotient = 0;
                     break;
                 case 9:
-                    this.this._quotient *= (quotient);
+                    this._quotient *= (quotient);
                     break;
                 case 10:
                     this.updateQuotient(quotient);
