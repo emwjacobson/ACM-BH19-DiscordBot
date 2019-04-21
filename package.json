@@ -19,6 +19,7 @@
     "node-opus": "^0.3.1",
     "ste-simple-events": "^1.4.10",
     "typescript": "^3.4.4",
+    "wav": "^1.0.2",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {

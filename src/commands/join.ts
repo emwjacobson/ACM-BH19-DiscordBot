@@ -13,7 +13,7 @@ export class Join extends Command {
             msg.channel.send("Here I come!");
             let reciever = connection.createReceiver();
             reciever.on('pcm', (user: User, buffer: Buffer) => {
-                msg.channel.send(buffer);
+                console.log("STUFF IS HAPPENING!!!!");
             });
         }).catch((error) => {
             msg.channel.send("Hm, there seems to be a problem...");
