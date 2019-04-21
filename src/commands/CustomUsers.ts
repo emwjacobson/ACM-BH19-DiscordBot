@@ -50,11 +50,6 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
                     break;
             }
         }
-        if(this._quotient < -500)
-        {
-            this.kick("🦀🦀🦀YOU LOST LOL🦀🦀🦀");
-            return;
-        }
         this._lastmsg = msg.content;
         
     }
