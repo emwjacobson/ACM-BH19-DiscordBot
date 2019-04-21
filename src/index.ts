@@ -6,7 +6,14 @@ import { Command } from './commands/command';
 import { Kick } from './commands/kick';
 import { Ban } from './commands/ban';
 import { SentimentAnalysis } from './commands/SentimentAnalysis';
-$env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
+import { CustomUsers } from './commands/CustomUsers';
+import { stringify } from 'querystring';
+import { ENETUNREACH } from 'constants';
+import { userInfo } from 'os';
+import { isNullOrUndefined } from 'util';
+const EventEmitter = require('events').EventEmitter;
+const myEventEmitter = new EventEmitter;
+let arrUsers : CustomUsers[] = [];
 let cmds: Command[] = [
     new Test(),
     new Kick(),
@@ -34,12 +41,40 @@ client.on('message', (msg: Discord.Message) => {
                 }
             }
         }
-        
+  
         // TODO: Analyze sentient here
         let sentiment = new SentimentAnalysis(msg);
-        msg.channel.send(sentiment.reply);
-    }
-    console.log((new Date).getMilliseconds() - timei);
+        sentiment.onEvent.one(tick => {
+            let found = false;
+            let quotientNumber = 0;
+            if(isNullOrUndefined(arrUsers))
+            {
+                arrUsers = [new CustomUsers(sentiment.user, sentiment.result.score)];
+                quotientNumber = arrUsers[arrUsers.length - 1].getQuotient();
+            }
+            arrUsers.forEach(user => {
+                if(user.equals(sentiment.message.author))
+                {
+                    user.updateQuotient(sentiment.result.score);
+                    quotientNumber = user.getQuotient();
+                    found = true;
+                    return;
+                }
+            });
+            if(!found)
+            {
+                arrUsers.push(new CustomUsers(sentiment.message.author, sentiment.result.score))
+                quotientNumber = arrUsers[arrUsers.length - 1].getQuotient();
+            }
+            let retString = "Text: " + sentiment.message.content
+                            + "\nUser: " + sentiment.message.author.username
+                            + "\nCurrent Sentiment Quotient: " + quotientNumber;
+            msg.channel.sendMessage(retString);
+            console.log(retString);
+        });
+        //sentiment.onEvent.clear();
+    }    
 });
 
 client.login(env.token);
+
