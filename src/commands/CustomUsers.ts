@@ -23,7 +23,7 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
         let similiar = stringSimilarity.compareTwoStrings(msg.content, this._lastmsg)
         if ( similiar > 0.70)
         {
-            this.kick("🦀🦀🦀CHEATER LOL🦀🦀🦀");
+            this.kick("");
             return;
         }
         let seed = (Math.round(num / 5) + Math.round((Math.random() * Math.floor(10))));

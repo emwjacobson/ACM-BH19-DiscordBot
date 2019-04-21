@@ -102,7 +102,7 @@ function sentimentAnalysis(msg: Discord.Message) {
         if (!alive) {
             arrUsers.splice(temp)
         }
-        if (ctr > 5) {
+        if (ctr > 1000) {
             let sortFunction = (user1: CustomUsers, user2: CustomUsers) => {
                 return user1.getQuotient() - user2.getQuotient();
             };
