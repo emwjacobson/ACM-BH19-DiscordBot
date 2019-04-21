@@ -1,4 +1,5 @@
 export const env = {
     token: '',
-    botId: ''
+    botId: '',
+    GOOGLE_APPLICATION_CREDENTIALS: ""   
 }
