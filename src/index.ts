@@ -17,15 +17,20 @@ let arrUsers : CustomUsers[] = [];
 import { Ping } from './commands/ping';
 import { Join } from './commands/join';
 import { Leave } from './commands/leave';
+import { StartBR } from './commands/startbr';
+import { EndBR } from './commands/endbr';
 // $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
-
+var msgNum = 0;
+var ctr = 0;
 let cmds: Command[] = [
     new Test(),
     new Kick(),
     new Ban(),
     new Ping(),
     new Join(),
-    new Leave()
+    new Leave(),
+    new StartBR(),
+    new EndBR(),
 ];
 
 client.on('ready', () => {
@@ -47,41 +52,74 @@ client.on('message', (msg: Discord.Message) => {
                 }
             }
         }
-  
-        // TODO: Analyze sentient here
-        let sentiment = new SentimentAnalysis(msg);
-        sentiment.onEvent.one(tick => {
-            let found = false;
-            let quotientNumber = 0;
-            if(isNullOrUndefined(arrUsers))
-            {
-                arrUsers = [new CustomUsers(sentiment.user, sentiment.result.score)];
-                quotientNumber = arrUsers[arrUsers.length - 1].getQuotient();
-            }
-            arrUsers.forEach(user => {
-                if(user.equals(sentiment.message.author))
-                {
-                    user.updateQuotient(sentiment.result.score);
-                    quotientNumber = user.getQuotient();
-                    found = true;
-                    return;
-                }
-            });
-            if(!found)
-            {
-                arrUsers.push(new CustomUsers(sentiment.message.author, sentiment.result.score))
-                quotientNumber = arrUsers[arrUsers.length - 1].getQuotient();
-            }
-            let retString = "Text: " + sentiment.message.content
-                            + "\nUser: " + sentiment.message.author.username
-                            + "\nCurrent Sentiment Quotient: " + quotientNumber;
-            msg.channel.sendMessage(retString);
-            console.log(retString);
-        });
+        sentimentAnalysis(msg);
         //sentiment.onEvent.clear();
 
     }
 });
 
 client.login(env.token);
+
+function sentimentAnalysis(msg: Discord.Message) {
+    let sentiment = new SentimentAnalysis(msg);
+    sentiment.onEvent.one(tick => {
+        msgNum++;
+        ctr++;
+        let alive = true;
+        let found = false;
+        let quotientNumber = 0;
+        if (isNullOrUndefined(arrUsers)) {
+            arrUsers = [new CustomUsers(sentiment.user, sentiment.result.score, sentiment.message, msgNum)];
+            quotientNumber = arrUsers[arrUsers.length - 1].getQuotient();
+            alive = arrUsers[arrUsers.length - 1].isAlive;
+        }
+        arrUsers.forEach(user => {
+            if (user.equals(sentiment.message.author)) {
+                user.updateQuotient(sentiment.result.score, sentiment.message, msgNum);
+                quotientNumber = user.getQuotient();
+                if (quotientNumber <= -500) {
+                    user.kick("Quotient too low!");
+                }
+                found = true;
+                alive = user.isAlive;
+                return;
+            }
+        });
+        if (!found) {
+            arrUsers.push(new CustomUsers(sentiment.message.author, sentiment.result.score, sentiment.message, msgNum));
+            quotientNumber = arrUsers[arrUsers.length - 1].getQuotient();
+            alive = arrUsers[arrUsers.length - 1].isAlive;
+        }
+        if (!alive) {
+            let sortFunction = (user1: CustomUsers, user2: CustomUsers) => {
+                return user1.getQuotient() - user2.getQuotient();
+            };
+            arrUsers = arrUsers.sort(sortFunction);
+            arrUsers.pop();
+        }
+        if (ctr > 5) {
+            let sortFunction = (user1: CustomUsers, user2: CustomUsers) => {
+                return user1.getQuotient() - user2.getQuotient();
+            };
+            arrUsers = arrUsers.sort(sortFunction);
+            let num = Math.round(arrUsers.length / 2);
+            for (let index = 0; index <= num; index++) {
+                let element: any;
+                element = arrUsers.pop();
+                element.kick("YOU GOT PRUNED SON");
+            }
+            ctr = 0;
+        }
+        let retString = "Text: " + sentiment.message.content
+            + "\nUser: " + sentiment.message.author.username
+            + "\nCurrent Sentiment Quotient: " + quotientNumber
+            + "\nCurrent number of message: " + msgNum
+            + "\nCurrent users playing:";
+        arrUsers.forEach(element => {
+            retString += "\n" + element.user.username;
+        });
+        msg.channel.sendMessage(retString);
+        console.log(retString);
+    });
+}
 
