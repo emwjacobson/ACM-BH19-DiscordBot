@@ -4,11 +4,12 @@ import { env } from "../environment";
 
 export class Help extends Command {
     constructor() {
-        super('help');
+        super('myth');
     }
 
     public call(msg: Message, command: string) {
         let help_msg = "Powers of TiaBot: \n";
+        help_msg += "myth displays this message \n";
         help_msg += "kick [@username(s)] throws user(s) overboard \n";
         help_msg += "ban [@username(s)] returns user(s) to the cosmic abyss \n";
         help_msg += "tablet-of-destinies instigates a primordial battle between (non-admin) users. \n";
