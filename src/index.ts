@@ -3,10 +3,15 @@ const client = new Discord.Client();
 import { env } from './environment';
 import { Test } from './commands/test';
 import { Command } from './commands/command';
+import { Kick } from './commands/kick';
+import { Ban } from './commands/ban';
 
-// let cmds: Command = [
-//     new Test(),
-// ];
+let cmds: Command[] = [
+    new Test(),
+    new Kick(),
+    new Ban(),
+    // new Ping(),
+];
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -20,14 +25,13 @@ client.on('message', (msg: Discord.Message) => {
         // If you summoned the bot, respond to command
         let check = "<@" + env.botId + ">";
         if (msg.content.startsWith(check)) {
-            msg.channel.send("You called?");
             let command = msg.content.substring(check.length).trim();
             let split = command.split(" ");
-            // for(let cmd of cmds) {
-            //     if(cmd.command_name == split[0]) {
-
-            //     }
-            // }
+            for(let cmd of cmds) {
+                if(cmd.command_name == split[0]) {
+                    cmd.call(msg, command);
+                }
+            }
         }
         
         // TODO: Analyze sentient here
