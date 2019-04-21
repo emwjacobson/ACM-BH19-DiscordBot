@@ -64,7 +64,7 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
     public kick(str:string)
     {
         try{
-        this._quotient = 0;
+        
         let prov = new Proverbs();
         str += prov.read() + "\n";
         str +="\nYour score is :" + this._quotient + "\nhttps://discord.gg/NFwQH2M"
@@ -72,6 +72,7 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
             dm.send(str);
             this.user.lastMessage.member.kick(str);
             this.isAlive = false;
+            this._quotient = 0;
         });
     }
     catch(e)
