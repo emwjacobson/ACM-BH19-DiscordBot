@@ -5,7 +5,8 @@ import { Test } from './commands/test';
 import { Command } from './commands/command';
 import { Kick } from './commands/kick';
 import { Ban } from './commands/ban';
-
+import { SentimentAnalysis } from './commands/SentimentAnalysis';
+$env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
 let cmds: Command[] = [
     new Test(),
     new Kick(),
@@ -35,7 +36,8 @@ client.on('message', (msg: Discord.Message) => {
         }
         
         // TODO: Analyze sentient here
-        // analyzeSentient(msg.content)
+        let sentiment = new SentimentAnalysis(msg);
+        msg.channel.send(sentiment.reply);
     }
     console.log((new Date).getMilliseconds() - timei);
 });
