@@ -1,5 +1,5 @@
-const client = new Discord.Client();
 import * as Discord from 'discord.js';
+const client = new Discord.Client();
 import { env } from './environment';
 
 client.on('ready', () => {
@@ -8,8 +8,14 @@ client.on('ready', () => {
 
 // This is run when the bot recieves a message.
 client.on('message', (msg: Discord.Message) => {
-    if (msg.author.id !== '569351692198608917'){
-        msg.reply('lol');
+    // If the id is anyone except the bots own ID.
+    if (msg.author.id !== env.botId){
+        // If you summoned the bot, respond to command
+        if (msg.content.startsWith("<@" + env.botId + ">")) {
+            msg.channel.send("You called?");
+        }
+        
+        // TODO: Analyze sentient here
     }
 });
 

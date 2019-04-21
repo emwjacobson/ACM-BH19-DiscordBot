@@ -1,3 +1,4 @@
 export const env = {
-    token: ''
+    token: '',
+    botId: ''
 }
