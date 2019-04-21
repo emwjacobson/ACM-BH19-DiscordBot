@@ -6,7 +6,6 @@ import { Command } from './commands/command';
 import { Kick } from './commands/kick';
 import { Ban } from './commands/ban';
 import { SentimentAnalysis } from './commands/SentimentAnalysis';
-<<<<<<< HEAD
 import { CustomUsers } from './commands/CustomUsers';
 import { stringify } from 'querystring';
 import { ENETUNREACH } from 'constants';
@@ -15,10 +14,8 @@ import { isNullOrUndefined } from 'util';
 const EventEmitter = require('events').EventEmitter;
 const myEventEmitter = new EventEmitter;
 let arrUsers : CustomUsers[] = [];
-=======
 import { Ping } from './commands/ping';
 // $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
->>>>>>> 8115069abed68ad7b2baac225af504647117c379
 let cmds: Command[] = [
     new Test(),
     new Kick(),
@@ -48,7 +45,6 @@ client.on('message', (msg: Discord.Message) => {
   
         // TODO: Analyze sentient here
         let sentiment = new SentimentAnalysis(msg);
-<<<<<<< HEAD
         sentiment.onEvent.one(tick => {
             let found = false;
             let quotientNumber = 0;
@@ -78,11 +74,8 @@ client.on('message', (msg: Discord.Message) => {
             console.log(retString);
         });
         //sentiment.onEvent.clear();
-    }    
-=======
-        msg.channel.send(sentiment.reply);
+
     }
->>>>>>> 8115069abed68ad7b2baac225af504647117c379
 });
 
 client.login(env.token);
