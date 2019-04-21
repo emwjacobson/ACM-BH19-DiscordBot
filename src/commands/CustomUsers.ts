@@ -1,6 +1,6 @@
 import * as Discord from 'discord.js';
 import { Kick } from './kick';
-import {Proverbs} from `./proverbs`;
+import {Proverbs} from './proverbs';
 var stringSimilarity = require('string-similarity');
 abstract class IECustomUsers<T>
 {
