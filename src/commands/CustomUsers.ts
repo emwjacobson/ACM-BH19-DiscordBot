@@ -15,8 +15,32 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
 
     public updateQuotient(quotient : number)
     {
-        //let seed =  (Math.random() * Math.floor(40));
+        
+        let seed =  (Math.random() * Math.floor(10));
+        if(seed  < 5){
         this._quotient += (quotient * 100);
+        }
+        else
+        {
+            switch (seed) {
+                case 6:
+                    this._quotient += (quotient * 30);
+                    break;
+                case 7:
+                    this._quotient -= (quotient * 100);
+                break;
+                case 8:
+                    this._quotient = 0;
+                    break;
+                case 9:
+                    this.this._quotient *= (quotient);
+                    break;
+                case 10:
+                    this.updateQuotient(quotient);
+                default:
+                    break;
+            }
+        }
     }
     public equals(obj: Discord.User) : boolean { 
         return this.user.id === obj.id;
