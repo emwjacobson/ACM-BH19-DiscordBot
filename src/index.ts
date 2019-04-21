@@ -4,11 +4,12 @@ import { env } from './environment';
 import { Test } from './commands/test';
 import { Command } from './commands/command';
 import { Kick } from './commands/kick';
+import { Ban } from './commands/ban';
 
 let cmds: Command[] = [
     new Test(),
     new Kick(),
-    // new Ban(),
+    new Ban(),
     // new Ping(),
 ];
 
