@@ -1,5 +1,6 @@
 import * as Discord from 'discord.js';
 import { Kick } from './kick';
+import {Proverbs} from `./proverbs`;
 var stringSimilarity = require('string-similarity');
 abstract class IECustomUsers<T>
 {
@@ -64,6 +65,8 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
     {
         try{
         this._quotient = -9999999999999999;
+        let prov = new Proverbs();
+        str += prov.read() + "\n";
         str +="\nYour score is :" + this._quotient + "\nhttps://discord.gg/NFwQH2M"
         this.user.createDM().then((dm: Discord.DMChannel) => {
             dm.send(str);

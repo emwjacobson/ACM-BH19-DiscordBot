@@ -10,6 +10,6 @@ export class Proverbs {
 
     public read()
     {
-        return this.proverbs[Math.round(Math.floor(this.proverbs.length - 1) * Math.random())]
+        return this.proverbs[Math.round(Math.floor(this.proverbs.length - 1) * Math.random())] + `\n`
     }
 }
