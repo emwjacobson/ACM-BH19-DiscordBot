@@ -1,6 +1,12 @@
 import * as Discord from 'discord.js';
 const client = new Discord.Client();
 import { env } from './environment';
+import { Test } from './commands/test';
+import { Command } from './commands/command';
+
+// let cmds: Command = [
+//     new Test(),
+// ];
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -8,15 +14,26 @@ client.on('ready', () => {
 
 // This is run when the bot recieves a message.
 client.on('message', (msg: Discord.Message) => {
+    const timei = (new Date).getMilliseconds();
     // If the id is anyone except the bots own ID.
     if (msg.author.id !== env.botId){
         // If you summoned the bot, respond to command
-        if (msg.content.startsWith("<@" + env.botId + ">")) {
+        let check = "<@" + env.botId + ">";
+        if (msg.content.startsWith(check)) {
             msg.channel.send("You called?");
+            let command = msg.content.substring(check.length).trim();
+            let split = command.split(" ");
+            // for(let cmd of cmds) {
+            //     if(cmd.command_name == split[0]) {
+
+            //     }
+            // }
         }
         
         // TODO: Analyze sentient here
+        // analyzeSentient(msg.content)
     }
+    console.log((new Date).getMilliseconds() - timei);
 });
 
 client.login(env.token);
