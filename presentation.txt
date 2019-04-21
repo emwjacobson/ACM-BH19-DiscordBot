@@ -1,0 +1,14 @@
+Ideas for the presentation of Tiabot
+
+Tiabot myth command lists other commands:
+kick [@username(s)] throws user(s) overboard
+ban [@username(s)] returns user(s) to the cosmic abyss
+tablet-of-destinies instigates a primordial battle between (non-admin)
+users. Users that fail to please the goddess are cast into the sea.
+Last user remaining has the Tablet of Destinies conferred on them by
+TiaBot, making them the new ruler of lesser users. 
+[[add "TiaBot's Chosen" role to server, and have TiaBot assign to winner]]
+
+Demo channel on discord server has description or pinned message
+"@TiaBot to invoke the goddess's wrath"
+"@TiaBot myth to learn the goddess's powers"
