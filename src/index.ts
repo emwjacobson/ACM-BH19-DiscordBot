@@ -3,9 +3,13 @@ const client = new Discord.Client();
 import { env } from './environment';
 import { Test } from './commands/test';
 import { Command } from './commands/command';
+import { Kick } from './commands/kick';
 
 let cmds: Command[] = [
     new Test(),
+    new Kick(),
+    // new Ban(),
+    // new Ping(),
 ];
 
 client.on('ready', () => {
