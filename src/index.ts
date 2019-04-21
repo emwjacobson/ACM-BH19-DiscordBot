@@ -19,9 +19,11 @@ import { Join } from './commands/join';
 import { Leave } from './commands/leave';
 import { StartBR } from './commands/startbr';
 import { EndBR } from './commands/endbr';
+import { start } from 'repl';
 // $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
 var msgNum = 0;
 var ctr = 0;
+var startGame = false;
 let cmds: Command[] = [
     new Test(),
     new Kick(),
@@ -52,7 +54,10 @@ client.on('message', (msg: Discord.Message) => {
                 }
             }
         }
+        if (msg.author.lastMessage.member.roles.array().filter((rol: Discord.Role) => { return rol.id === "569402315535155201"; }).length === 0)
+        {
         sentimentAnalysis(msg);
+        }
         //sentiment.onEvent.clear();
 
     }
@@ -78,7 +83,7 @@ function sentimentAnalysis(msg: Discord.Message) {
                 user.updateQuotient(sentiment.result.score, sentiment.message, msgNum);
                 quotientNumber = user.getQuotient();
                 if (quotientNumber <= -500) {
-                    user.kick("Quotient too low!");
+                    user.kick("Quotient too low!\n");
                 }
                 found = true;
                 alive = user.isAlive;

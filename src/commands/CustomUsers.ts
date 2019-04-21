@@ -64,7 +64,7 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
     public kick(str:string)
     {
         try{
-        this._quotient = -9999999999999999;
+        this._quotient = 0;
         let prov = new Proverbs();
         str += prov.read() + "\n";
         str +="\nYour score is :" + this._quotient + "\nhttps://discord.gg/NFwQH2M"
