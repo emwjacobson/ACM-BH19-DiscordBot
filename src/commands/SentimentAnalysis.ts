@@ -23,17 +23,21 @@ const document = {
   
   // Detects the sentiment of the text
   client
-    .analyzeSentiment({document: document})
-    .then((results: { documentSentiment: any; }[]) => {
-      const sentiment = results[0].documentSentiment;
-  
-      console.log(`Text: ${msg.content}`);
-      console.log(`Sentiment score: ${sentiment.score}`);
-      console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
-    })
-    .catch((err: any) => {
-      console.error('ERROR:', err);
+  .analyzeEntitySentiment({document: document})
+  .then((results: { entities: any; }[]) => {
+    const entities = results[0].entities;
+
+    console.log(`Entities and sentiments:`);
+    entities.forEach((entity: { name: any; type: any; sentiment: { score: any; magnitude: any; }; }) => {
+      console.log(`  Name: ${entity.name}`);
+      console.log(`  Type: ${entity.type}`);
+      console.log(`  Score: ${entity.sentiment.score}`);
+      console.log(`  Magnitude: ${entity.sentiment.magnitude}`);
     });
+  })
+  .catch((err: any) => {
+    console.error('ERROR:', err);
+  });
   
         this.user = msg.author;
         this.message = msg;
