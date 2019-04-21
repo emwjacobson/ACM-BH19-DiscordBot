@@ -6,6 +6,7 @@ abstract class IECustomUsers<T>
 export class CustomUsers extends IECustomUsers<Discord.User>{
     public user: Discord.User;
     private _quotient = 0;
+    private _lastquotient = 0;
 
     constructor(id: Discord.User, quotient: number) {
         super();
@@ -14,8 +15,12 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
     }
 
     public updateQuotient(quotient : number)
-    {
-        
+    {   
+        if(quotient = this._lastquotient)
+        {
+            this._quotient += -9999999;
+            return;
+        }
         let seed =  (Math.random() * Math.floor(10));
         if(seed  < 5){
         this._quotient += (quotient * 100);
@@ -41,6 +46,7 @@ export class CustomUsers extends IECustomUsers<Discord.User>{
                     break;
             }
         }
+        this._lastquotient = quotient;
     }
     public equals(obj: Discord.User) : boolean { 
         return this.user.id === obj.id;
