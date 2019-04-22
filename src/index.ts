@@ -20,6 +20,7 @@ import { Leave } from './commands/leave';
 import { StartBR } from './commands/startbr';
 import { EndBR } from './commands/endbr';
 import { start } from 'repl';
+import { Help } from './commands/help';
 // $env:GOOGLE_APPLICATION_CREDENTIALS: env.GOOGLE_APPLICATION_CREDENTIALS;
 var msgNum = 0;
 var ctr = 0;
@@ -33,6 +34,7 @@ let cmds: Command[] = [
     new Leave(),
     new StartBR(),
     new EndBR(),
+    new Help()
 ];
 
 client.on('ready', () => {

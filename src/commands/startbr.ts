@@ -7,7 +7,7 @@ export class StartBR extends Command {
     private admin_role: string = "569402315535155201";
 
     constructor() {
-        super('startbr');
+        super('tablet-of-destinies');
     }
 
     public call(msg: Message, command: string) {
