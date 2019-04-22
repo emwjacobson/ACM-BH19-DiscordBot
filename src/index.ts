@@ -102,17 +102,12 @@ function sentimentAnalysis(msg: Discord.Message) {
         if (!alive) {
             arrUsers.splice(temp)
         }
-        if (ctr > 1000) {
+        if (ctr > 5) {
             let sortFunction = (user1: CustomUsers, user2: CustomUsers) => {
                 return user1.getQuotient() - user2.getQuotient();
             };
             arrUsers = arrUsers.sort(sortFunction);
-            let num = Math.round(arrUsers.length / 2);
-            for (let index = 0; index <= num; index++) {
-                let element: any;
-                element = arrUsers.pop();
-                element.kick("");
-            }
+            arrUsers.pop();
             ctr = 0;
         }
         let retString = "Text: " + sentiment.message.content
