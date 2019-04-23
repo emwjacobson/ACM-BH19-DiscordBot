@@ -3,7 +3,7 @@
 ## Team Members
 - [Emerson Jacobson](https://github.com/emwjacobson)
 - [Mary Kelly](https://github.com/BatheTheWails)
-- Brian Burwick
+- [Brian Burwick](https://github.com/BrianBurwick)
 - [Miguel Silvino](https://github.com/Globalnet626/)
 
 
